@@ -32141,7 +32141,7 @@ loc_1B6F8:
 
 loc_1B714:
 		moveq	#signextendB(sfx_RingRight),d0
-		jmp	(Play_Music).l
+		jmp	(Play_SFX).l
 ; ---------------------------------------------------------------------------
 
 loc_1B71C:
@@ -32180,7 +32180,7 @@ Monitor_Give_FireShield:
 		bset	#0,$2B(a1)
 		bset	#4,$2B(a1)
 		moveq	#signextendB(sfx_FireShield),d0
-		jsr	(Play_Music).l
+		jsr	(Play_SFX).l
 		tst.b	$43(a0)
 		bne.s	loc_1B7A2
 		move.l	#Obj_FireShield,(Shield).w
@@ -32200,7 +32200,7 @@ Monitor_Give_LightningShield:
 		bset	#0,$2B(a1)
 		bset	#5,$2B(a1)
 		moveq	#signextendB(sfx_LightningShield),d0
-		jsr	(Play_Music).l
+		jsr	(Play_SFX).l
 		tst.b	$43(a0)
 		bne.s	loc_1B7E0
 		move.l	#Obj_LightningShield,(Shield).w
@@ -32220,7 +32220,7 @@ Monitor_Give_BubbleShield:
 		bset	#0,$2B(a1)
 		bset	#6,$2B(a1)
 		moveq	#signextendB(sfx_BubbleShield),d0
-		jsr	(Play_Music).l
+		jsr	(Play_SFX).l
 		tst.b	$43(a0)
 		bne.s	loc_1B81E
 		move.l	#Obj_BubbleShield,(Shield).w
@@ -78308,7 +78308,7 @@ loc_43DA2:
 		moveq	#4,d0
 		bsr.w	sub_43E20
 		moveq	#signextendB(sfx_FireShield),d0
-		jmp	(Play_Music).l
+		jmp	(Play_SFX).l
 ; ---------------------------------------------------------------------------
 
 loc_43DCC:
@@ -78320,7 +78320,7 @@ loc_43DCC:
 		moveq	#6,d0
 		bsr.w	sub_43E20
 		moveq	#signextendB(sfx_BubbleShield),d0
-		jmp	(Play_Music).l
+		jmp	(Play_SFX).l
 ; ---------------------------------------------------------------------------
 
 loc_43DF6:
@@ -78332,7 +78332,7 @@ loc_43DF6:
 		moveq	#5,d0
 		bsr.w	sub_43E20
 		moveq	#signextendB(sfx_LightningShield),d0
-		jmp	(Play_Music).l
+		jmp	(Play_SFX).l
 
 ; =============== S U B R O U T I N E =======================================
 
@@ -104201,7 +104201,7 @@ loc_544A8:
 
 loc_544C4:
 		moveq	#signextendB(sfx_RingRight),d0
-		jmp	(Play_Music).l
+		jmp	(Play_SFX).l
 ; ---------------------------------------------------------------------------
 
 loc_544CC:
