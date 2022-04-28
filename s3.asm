@@ -15,27 +15,28 @@
 		include "sonic3k.constants.asm"		; include some constants
 		include "s3.constants.asm"		    ; RAM addresses moved around between S3 and S&K
 ; ---------------------------------------------------------------------------
-strip_padding = 0
+strip_padding = 1
 ; If 1, strips all unnecessary padding
 Size_of_Snd_driver_guess = $1200
 ; Approximate size of compressed sound driver. Change when appropriate
 
-Vectors:	dc.l	Vectors,	EntryPoint,	ErrorTrap,	ErrorTrap	; 0
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 4
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 8
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 12
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 16
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 20
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 24
-		dc.l	JmpTo_HInt,	ErrorTrap,	VInt,		ErrorTrap	; 28
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 32
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 36
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 40
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 44
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 48
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 52
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 56
-		dc.l	ErrorTrap,	ErrorTrap,	ErrorTrap,	ErrorTrap	; 60
+Vectors:	
+        dc.l Vectors           , EntryPoint     , BusError         , AddressError   ;  4
+        dc.l IllegalInstrError , ZeroDivideError, CHKExceptionError, TRAPVError     ;  8
+        dc.l PrivilegeViolation, TraceError     , LineAEmulation   , LineFEmulation ; 12
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 16
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 20
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 24
+        dc.l SpuriousException , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 28
+        dc.l JmpTo_HInt        , ErrorTrap      , VInt       , ErrorTrap      ; 32
+        dc.l TrapVector        , TrapVector     , TrapVector       , TrapVector     ; 36
+        dc.l TrapVector        , TrapVector     , TrapVector       , TrapVector     ; 40
+        dc.l TrapVector        , TrapVector     , TrapVector       , TrapVector     ; 44
+        dc.l TrapVector        , TrapVector     , TrapVector       , TrapVector     ; 48
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 52
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 56
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 60
+        dc.l ErrorTrap         , ErrorTrap      , ErrorTrap        , ErrorTrap      ; 64
 Header:		dc.b "SEGA GENESIS    "
 Copyright:	dc.b "(C)SEGA 1993.NOV"
 Domestic_Name:	dc.b "SONIC THE             HEDGEHOG 3                "
@@ -140,7 +141,7 @@ Init_InputPSG:
 		move	#$2700,sr
 
 Init_SkipPowerOn:
-		bra.s	Test_CountryCode
+		bra.w	Test_CountryCode
 ; ---------------------------------------------------------------------------
 SetupValues:	dc.w $8000, $3FFF, $100
 		dc.l Z80_RAM
@@ -215,7 +216,8 @@ Z80StartupCodeEnd:
 		dc.l $40000010		; value for VSRAM write mode
 PSGInitValues:	dc.b $9F, $BF, $DF, $FF	; values for PSG channel volumes
 ; ---------------------------------------------------------------------------
-
+        include "_inc/src/skcompat.asm"
+        include "_inc/src/Debugger.asm"
 Test_CountryCode:
 		tst.w	(VDP_control_port).l
 		clr.l	d0
@@ -117419,9 +117421,9 @@ DemoDat_HCZ:	binclude "Levels/HCZ/Demodata/1.bin"
 		even
 DemoDat_MGZ:	binclude "Levels/MGZ/Demodata/1.bin"
 		even
-
-		org $C71A0
+;		org $C71A0
    include "Sound/Flamedriver.asm"
+        listing purecode   
 		align $8000
 ArtUnc_Sonic:	binclude "General/Sprites/Sonic/Art/Sonic.bin"
 		even
