@@ -710,7 +710,6 @@ SSZ_MTZ_boss_X_vel			ds.w 1				; horizontal velocity of the Metropolis Zone boss
 SSZ_MTZ_boss_Y_vel			ds.w 1				; vertical velocity of the Metropolis Zone boss in Sky Sanctuary
 SSZ_MTZ_boss_laser_timer			ds.w 1	; counts down until a laser is fired in Sky Sanctuary's Metropolis boss fight
 			ds.w 1				; unused
-
 DMA_queue			ds.w $12*7		; stores all the VDP commands necessary to initiate a DMA transfer
 DMA_queue_slot			ds.l 1			; points to the next free slot on the queue
 
